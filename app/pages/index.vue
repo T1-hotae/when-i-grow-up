@@ -2,6 +2,14 @@
 import { landing } from '~/data/script'
 
 onMounted(() => bgm('title'))
+
+const asking = ref(false)
+const who = ref<HTMLElement>()
+async function start() {
+  asking.value = true
+  await nextTick()
+  who.value?.querySelector('a')?.focus() // 키보드 사용자가 바로 고를 수 있게
+}
 </script>
 
 <template>
@@ -12,10 +20,13 @@ onMounted(() => bgm('title'))
         <p v-for="line in landing.lines" :key="line">{{ line }}</p>
       </div>
       <div class="actions">
-        <p class="ask">{{ landing.start }}</p>
-        <div class="who" role="group" :aria-label="landing.start">
-          <NuxtLink v-for="(label, me) in landing.me" :key="me" :to="`/play?me=${me}`" class="start">{{ label }} <span class="arrow" aria-hidden="true">→</span></NuxtLink>
-        </div>
+        <button v-if="!asking" type="button" class="start" @click="start">{{ landing.start }} <span class="arrow" aria-hidden="true">→</span></button>
+        <template v-else>
+          <p class="ask">{{ landing.ask }}</p>
+          <div ref="who" class="who" role="group" :aria-label="landing.ask">
+            <NuxtLink v-for="(label, me) in landing.me" :key="me" :to="`/play?me=${me}`" class="start">{{ label }} <span class="arrow" aria-hidden="true">→</span></NuxtLink>
+          </div>
+        </template>
         <small>{{ landing.note }}</small>
       </div>
     </div>
@@ -69,6 +80,8 @@ p { margin: 0; color: #f1eee8; font-size: clamp(1.05rem, 1.6vw, 1.25rem); line-h
   font-weight: 600;
   letter-spacing: -0.01em;
   text-decoration: none;
+  font-family: inherit;
+  cursor: pointer;
   box-shadow: 0 10px 40px rgb(0 0 0 / 0.3), inset 0 1px 0 rgb(255 255 255 / 0.25);
   transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
 }

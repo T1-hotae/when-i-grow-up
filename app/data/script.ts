@@ -17,7 +17,8 @@ export type Dream = {
 export const landing = {
   title: '어른이 되면',
   lines: ['어젯밤 꿈에 열 살의 내가 나왔어요.', '"꿈꾸던 어른이 되었나요?"'],
-  start: '오늘 밤으로 가기',
+  start: '시작하기',
+  ask: '나는…',
   me: { daughter: '여자', son: '남자' } satisfies Record<Me, string>,
   note: '약 6분 걸려요. 소리를 켜 주세요.',
 }

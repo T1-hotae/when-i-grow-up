@@ -13,7 +13,7 @@
 
 | 장면 | 내용 | 대사 (script.ts) | 화면 (컴포넌트) |
 | --- | --- | --- | --- |
-| 첫 화면 | 제목, 성별(여자/남자) 고르면 시작 | `landing` | [pages/index.vue](../app/pages/index.vue) |
+| 첫 화면 | 제목, 시작하기 누르면 성별(여자/남자) 묻고 시작 | `landing` | [pages/index.vue](../app/pages/index.vue) |
 | 0-1 노트북 | 탈락 메일, 동기 단톡방, 부모 알림(숨은 길: 4초 안에 누르면 하소연) → 노트북 덮기 | `scene0.desk`, `family` | [Desktop.vue](../app/components/Desktop.vue), [Messenger.vue](../app/components/Messenger.vue) |
 | 0-2 이불 속 폰 | 친구들 인스타 스토리 넘기기 | `scene0.bed` | play.vue 템플릿 안 (스토리 화면) |
 | 0-3 천장 | 야광별 보다 잠듦 (눈꺼풀 감기) | `scene0.ceiling` | [Room.vue](../app/components/Room.vue) (`view: 'ceiling'`) |
