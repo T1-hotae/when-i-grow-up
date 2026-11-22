@@ -1,0 +1,48 @@
+<script setup lang="ts">
+import { dreams, scene5, type DreamId } from '~/data/script'
+
+const props = defineProps<{ id: DreamId, worries?: number, proud?: string }>()
+const type = computed(() => dreams[props.id].type)
+</script>
+
+<template>
+  <figure class="card" :style="{ backgroundImage: `url(/images/card-${id}.webp)` }">
+    <header>
+      <h2>{{ type.name }}</h2>
+      <p>{{ type.desc }}</p>
+    </header>
+    <footer>
+      <blockquote>"{{ type.words }}"</blockquote>
+      <p v-if="worries !== undefined">{{ scene5.worryCount(worries) }}</p>
+      <p v-if="proud">{{ scene5.proudLabel }}: {{ proud }}</p>
+    </footer>
+  </figure>
+</template>
+
+<style scoped>
+.card {
+  position: relative;
+  flex: none;
+  margin: 0;
+  width: min(100%, 340px, calc((100dvh - 230px) * 9 / 16));
+  aspect-ratio: 9 / 16;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #0b1020 center / cover;
+  box-shadow: 0 12px 40px rgb(0 0 0 / 0.5);
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 1px 8px rgb(0 0 0 / 0.7);
+}
+.card::before, .card::after { content: ''; position: absolute; inset: 0 0 auto; pointer-events: none; }
+.card::before { height: 32%; background: linear-gradient(rgb(5 8 20 / 0.75), transparent); }
+.card::after { inset: auto 0 0; height: 43%; background: linear-gradient(transparent, rgb(5 8 20 / 0.75)); }
+header, footer { position: relative; z-index: 1; padding: 22px 18px; }
+h2 { margin: 0 0 6px; font-size: 1.4rem; }
+header p { margin: 0; font-size: 0.9rem; }
+blockquote { margin: 0 0 12px; font-family: Gaegu, cursive; font-size: 1.25rem; line-height: 1.4; }
+footer p { margin: 2px 0; font-size: 0.8rem; opacity: 0.9; }
+</style>
