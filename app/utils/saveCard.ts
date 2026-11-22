@@ -4,10 +4,10 @@ const W = 1080
 const H = 1920
 
 // 카드 그림 위에 글자를 얹어 png로 내려받는다 (화면의 ResultCard와 같은 배치)
-export async function saveCard(id: DreamId, worries: number, proud: string) {
+export async function saveCard(id: DreamId, things: number, proud: string) {
   const { name, desc, words } = dreams[id].type
   const img = new Image()
-  img.src = `/images/card-${id}.webp`
+  img.src = `/images/cards/card-${id}.webp`
   await Promise.all([img.decode(), document.fonts.load('60px Gaegu', words)]) // 한글 글꼴은 쓰는 글자가 든 조각만 받아 온다
 
   const c = document.createElement('canvas')
@@ -28,7 +28,7 @@ export async function saveCard(id: DreamId, worries: number, proud: string) {
   g.font = '60px Gaegu, sans-serif'
   wrap(g, `"${words}"`, 1380, 80)
   g.font = '38px sans-serif'
-  g.fillText(scene5.worryCount(worries), W / 2, 1660)
+  g.fillText(scene5.thingCount(things), W / 2, 1660)
   g.fillText(`${scene5.proudLabel}: ${proud}`, W / 2, 1720)
   g.globalAlpha = 0.6
   g.fillText(landing.title, W / 2, 1850)

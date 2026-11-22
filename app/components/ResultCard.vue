@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import { dreams, scene5, type DreamId } from '~/data/script'
 
-const props = defineProps<{ id: DreamId, worries?: number, proud?: string }>()
+const props = defineProps<{ id: DreamId, things?: number, proud?: string }>()
 const type = computed(() => dreams[props.id].type)
 </script>
 
 <template>
-  <figure class="card" :style="{ backgroundImage: `url(/images/card-${id}.webp)` }">
+  <figure class="card" :style="{ backgroundImage: `url(/images/cards/card-${id}.webp)` }">
     <header>
       <h2>{{ type.name }}</h2>
       <p>{{ type.desc }}</p>
     </header>
     <footer>
       <blockquote>"{{ type.words }}"</blockquote>
-      <p v-if="worries !== undefined">{{ scene5.worryCount(worries) }}</p>
+      <p v-if="things !== undefined">{{ scene5.thingCount(things) }}</p>
       <p v-if="proud">{{ scene5.proudLabel }}: {{ proud }}</p>
     </footer>
   </figure>

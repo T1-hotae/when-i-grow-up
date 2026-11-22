@@ -3,6 +3,7 @@ import { dreams, landing, type DreamId } from '~/data/script'
 
 // 유형을 넘겨 볼 때 페이지를 새로 그린다
 definePageMeta({ key: route => route.fullPath })
+onMounted(() => bgm('morning'))
 
 const ids = Object.keys(dreams) as DreamId[]
 const id = useRoute().params.id as DreamId
@@ -18,7 +19,7 @@ useSeoMeta({
   description: desc,
   ogTitle: `나는 ${name}`,
   ogDescription: `${desc}. ${landing.lines.join(' ')}`,
-  ogImage: new URL('/images/og.jpg', useRequestURL()).href, // 카카오톡 미리보기는 전체 주소가 필요하다
+  ogImage: new URL('/images/social/og.jpg', useRequestURL()).href, // 카카오톡 미리보기는 전체 주소가 필요하다
   twitterCard: 'summary_large_image',
 })
 </script>
