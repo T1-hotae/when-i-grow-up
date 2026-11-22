@@ -107,7 +107,7 @@ Children playing on a school playground: a slide, a swing, a soccer ball, three 
 
 ### dream-president.webp (대통령)
 ```
-"Me when I grow up": a grown-up president waving from a podium with a microphone, a big flag behind, many tiny smiling people holding hands. The figure is simple and gender-neutral. A drawing made by a 10-year-old child with crayons and colored pencils on slightly yellowed drawing paper, simple wobbly lines, uneven coloring that goes outside the lines, naive proportions, bright primary colors, visible paper texture, flat scan from directly above, the whole sheet visible with a thin margin, no text, no letters, no signature
+"Me when I grow up": a grown-up president waving from a podium with a microphone, a large South Korean Taegeukgi flag behind, many tiny smiling people holding hands. The figure is simple and gender-neutral. A drawing made by a 10-year-old child with crayons and colored pencils on slightly yellowed drawing paper, simple wobbly lines, uneven coloring that goes outside the lines, naive proportions, bright primary colors, visible paper texture, flat scan from directly above, the whole sheet visible with a thin margin, no text, no letters, no signature
 ```
 
 ### dream-police.webp (경찰)
@@ -207,9 +207,7 @@ A cozy dark one-room apartment at 2 a.m., a closed laptop on a wooden desk, a wa
 
 ---
 
-## 5. 대본 v2에서 새로 필요한 그림
-
-아직 없는 그림은 빈 칸으로 보여요.
+## 5. 대본 v2에서 추가한 그림
 
 ### drawing-blanket.webp (장면 3, 그림일기 2쪽 "부끄러운 날")
 ```
