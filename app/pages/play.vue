@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { dreams, family, landing, scene0, scene1, scene2, scene3, scene4, scene5, wake, type DiaryPaper, type DreamId, type Me } from '~/data/script'
+import { dreams, family, landing, scene0, scene1, scene2, scene3, scene4, scene5, wake, type DiaryPaper, type DreamId, type Me, type Story } from '~/data/script'
 import type { View } from '~/components/Room.vue'
 import type { Msg } from '~/components/Messenger.vue'
 
 // 첫 화면에서 고른 성별 (?me=son|daughter). 없으면 딸
 const me: Me = useRoute().query.me === 'son' ? 'son' : 'daughter'
 const parent = family[me]
-const stories = scene0.bed.stories[me]
+const stories: Story[] = scene0.bed.stories[me]
 const things = [...scene2.things, scene2.hobby[me]]
 let hidden = false // 숨은 길: 새벽 알림을 눌러 하소연했나
 
@@ -466,11 +466,16 @@ const save = () => saveCard(result.dream, result.things, result.proud)
 
     <Desktop v-if="ui.mode === 'desk'" v-bind="desk" @open="onPopup(true)" @dismiss="onPopup(false)" />
 
-    <section v-if="ui.mode === 'stories'" class="stories" :style="{ backgroundImage: `url(${story0.image})` }" aria-label="친구들의 스토리">
+    <section v-if="ui.mode === 'stories'" class="stories" :class="{ regram: !!story0.repost }" :style="story0.repost ? {} : { backgroundImage: `url(${story0.image})` }" aria-label="친구들의 스토리">
       <div class="bars">
         <span v-for="(s, i) in stories" :key="s.who" :class="{ done: i < ui.story, now: i === ui.story }" />
       </div>
       <header><img class="avatar" :src="story0.avatar" alt="" />{{ story0.who }}</header>
+      <div v-if="story0.repost" class="repost-card" :style="{ backgroundImage: `url(${story0.image})` }">
+        <div class="repost-header"><img :src="story0.repost.avatar" alt="" />{{ story0.repost.who }}</div>
+        <div class="repost-original"><strong>{{ story0.repost.headline }} 💐</strong><span>{{ story0.repost.caption }}</span></div>
+        <span class="repost-tag">{{ '@' + story0.who }}</span>
+      </div>
       <div class="story-sticker" :class="story0.layout">
         <div class="story-title">
           <strong class="story-headline">{{ story0.headline }}</strong>
@@ -720,6 +725,26 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 .bars .now { background: linear-gradient(90deg, #fff 50%, rgb(255 255 255 / 0.35) 50%); }
 .stories header { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 0.9rem; font-weight: 600; }
 .stories .avatar { flex: none; width: 32px; height: 32px; border: 2px solid rgb(255 255 255 / 0.85); border-radius: 50%; background: #d7dce4; object-fit: cover; }
+.stories.regram { background-image: radial-gradient(circle at 50% 45%, #58413e, #161a28 75%); }
+.repost-card {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: min(72vw, 42dvh, 420px);
+  aspect-ratio: 9 / 16;
+  transform: translate(-50%, -50%) rotate(-2deg);
+  border: 7px solid #151820;
+  border-radius: 12px;
+  background-position: center;
+  background-size: cover;
+  box-shadow: 0 16px 44px rgb(0 0 0 / 0.55);
+  overflow: hidden;
+}
+.repost-header { position: absolute; inset: 0 0 auto; display: flex; align-items: center; gap: 6px; padding: 10px; background: linear-gradient(rgb(0 0 0 / 0.55), transparent); color: #fff; font-size: 0.8rem; font-weight: 700; text-shadow: 0 1px 5px #000; }
+.repost-header img { width: 23px; height: 23px; border-radius: 50%; background: #ddd; }
+.repost-original { position: absolute; top: 29%; right: 5%; display: grid; gap: 4px; padding: 8px 10px; border-radius: 6px; background: rgb(5 5 7 / 0.9); color: #fff; text-align: right; font-size: clamp(0.8rem, 2.8vw, 1.1rem); font-weight: 700; }
+.repost-tag { position: absolute; bottom: 13%; left: 7%; padding: 5px 9px; border-radius: 4px; background: #fff; color: #20202a; font-size: 0.85rem; font-weight: 700; transform: rotate(-5deg); }
 .story-sticker {
   position: absolute;
   z-index: 1;
@@ -752,8 +777,10 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
   text-align: right;
   transform: rotate(-3deg);
 }
+.story-sticker.travel-arrival { top: 24%; left: 6%; transform: rotate(-3deg); }
 .story-sticker.travel .story-title, .story-sticker.anniversary .story-title { justify-content: flex-end; }
 .story-sticker.anniversary { top: 31%; right: 5%; text-align: right; transform: rotate(5deg); }
+.story-sticker.regram { top: 69%; left: 50%; z-index: 3; transform: translateX(-50%) rotate(5deg); background: #fff; color: #20202a; white-space: nowrap; }
 .story-sticker.wedding { left: 5%; bottom: 14%; transform: rotate(-4deg); }
 .story-sticker.bodyprofile { top: 54%; left: 50%; text-align: center; transform: translate(-50%, -50%) rotate(-4deg); }
 .story-sticker.bodyprofile .story-title { justify-content: center; }

@@ -76,8 +76,8 @@
 | 여자 계정 | 남자 계정 | 스토리 |
 | --- | --- | --- |
 | minji_ | junho_ | 첫 출근 🪪 잘 부탁드립니다 |
-| travel.junho | travel.seoyeon | 퇴사 기념 ✈️ 바르셀로나 |
-| seoyeon_ | minsu_ | 사랑해 💐 300일 동안 고마워 |
+| travel.junho | travel.seoyeon | 딸: 퇴사 기념 ✈️ 바르셀로나 / 아들: 거리 사진에 바르셀로나 왔다 ✈️ |
+| seoyeon_ | minsu_ | 딸: 사랑해 💐 300일 동안 고마워 / 아들: 남자가 운전하는 기존 사진을 리그램하며 나도 사랑해 💐 |
 | hyun_wedding | hyun_wedding | 저희 결혼합니다 💍 |
 | gym_daeun | gym_daehyun | 바디프로필 📸 100일 성공! 사진 후보 도착 |
 

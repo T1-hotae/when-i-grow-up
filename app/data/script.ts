@@ -35,7 +35,8 @@ export type Story = {
   emoji: string
   image: string
   avatar: string
-  layout: 'office' | 'travel' | 'anniversary' | 'wedding' | 'bodyprofile'
+  layout: 'office' | 'travel' | 'travel-arrival' | 'anniversary' | 'regram' | 'wedding' | 'bodyprofile'
+  repost?: { who: string, avatar: string, headline: string, caption: string }
 }
 
 // 장면 0. 새벽 1시 40분
@@ -80,8 +81,8 @@ export const scene0 = {
       ],
       son: [
         { who: 'junho_', headline: '첫 출근', caption: '잘 부탁드립니다', emoji: '🪪', image: '/images/stories/story-office-son.webp', avatar: '/images/avatars/profile-default.svg', layout: 'office' },
-        { who: 'travel.seoyeon', headline: '퇴사 기념', caption: '바르셀로나', emoji: '✈️', image: '/images/stories/story-junho.webp', avatar: '/images/avatars/profile-dog.svg', layout: 'travel' },
-        { who: 'minsu_', headline: '사랑해', caption: '300일 동안 고마워', emoji: '💐', image: '/images/stories/story-anniversary-son.webp', avatar: '/images/avatars/profile-character.svg', layout: 'anniversary' },
+        { who: 'travel.seoyeon', headline: '바르셀로나 왔다', caption: '', emoji: '✈️', image: '/images/stories/story-barcelona-son.webp', avatar: '/images/avatars/profile-dog.svg', layout: 'travel-arrival' },
+        { who: 'minsu_', headline: '나도 사랑해', caption: '', emoji: '💐', image: '/images/stories/story-anniversary.webp', avatar: '/images/avatars/profile-character.svg', layout: 'regram', repost: { who: 'seoyeon_', avatar: '/images/avatars/profile-character.svg', headline: '사랑해', caption: '300일 동안 고마워' } },
         { who: 'hyun_wedding', headline: '저희 결혼합니다', caption: '', emoji: '💍', image: '/images/stories/story-wedding.webp', avatar: '/images/avatars/profile-couple.svg', layout: 'wedding' },
         { who: 'gym_daehyun', headline: '바디프로필', caption: '100일 성공!\n사진 후보 도착', emoji: '📸', image: '/images/stories/story-gym-son.webp', avatar: '/images/avatars/profile-fitness.svg', layout: 'bodyprofile' },
       ],

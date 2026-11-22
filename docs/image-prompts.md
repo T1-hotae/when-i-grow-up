@@ -232,8 +232,8 @@ Edit this image: turn off the lights in almost all apartment windows so they bec
 
 경로는 `app/data/script.ts`의 `scene0.bed.stories[me][].image`에 있습니다. 위 5장은 여자(딸)로 고른 사람이 봅니다.
 
-### 남자(아들)용 스토리 3장 (장면 0-2, 9:16, 1080×1920)
-남자로 고르면 친구 성별이 바뀌어서 세 장을 새로 뽑아요. 여행(`story-junho`)과 결혼식은 그대로 같이 씁니다.
+### 남자(아들)용 추가 스토리 사진 3장 (장면 0-2, 9:16, 900×1600)
+남자로 고르면 아래 세 장을 사용해요. 기념일은 남자가 운전석에 있는 기존 `story-anniversary.webp`를 리그램으로 다시 쓰고, 결혼식도 기존 사진을 같이 씁니다.
 같은 단계의 여자용 그림을 레퍼런스로 넣고 "same photo style as the reference image"를 덧붙이면 두 길의 사진이 같은 결로 나와요.
 글자는 앱이 스티커로 올리니 사진 안에는 넣지 않아요. 위쪽 3분의 1은 스티커가 올라갈 자리라 비워 둡니다.
 
@@ -242,17 +242,17 @@ Edit this image: turn off the lights in almost all apartment windows so they bec
 Vertical smartphone photo for a social media story, first day at a new job. A hand holding up a white employee ID card on a lanyard in a bright modern office corridor, the card shows a small black-and-white ID photo of a young Korean man in a suit, the name area is blurred and unreadable. Glass meeting rooms and soft ceiling lights blurred in the background, shallow depth of field, natural daylight, slightly warm tone, casual phone snapshot feel. The upper third is calm background with no important details. No readable text, no logos, no company names, 9:16
 ```
 
-#### stories/story-anniversary-son.webp (minsu_ 300일)
+#### stories/story-barcelona-son.webp (travel.seoyeon 바르셀로나)
 ```
-Vertical smartphone photo for a social media story, 300-day couple anniversary, taken from the passenger seat of a car in the evening. A bouquet of pink and white flowers resting on the passenger's lap in the foreground, in the background the driver's side with a young woman's hand on the steering wheel wearing a thin bracelet, her face out of frame, the gear shift between the seats, city lights blurred through the windshield, warm dashboard glow, cozy and slightly grainy night photo. The upper third is calm with no important details. No readable text, no logos, no car brand marks, 9:16
+Vertical casual smartphone photo of an ordinary Barcelona street corner on arrival: warm pale stone apartment facades with wrought-iron balconies, a small outdoor cafe, a parked scooter and a few distant pedestrians in late afternoon Mediterranean sunlight. Spontaneous, slightly imperfect travel snapshot from the sidewalk, not a staged selfie or landmark photo. The upper third has calm room for the app's "바르셀로나 왔다" sticker. No readable text, signs, logos or built-in story UI, 9:16
 ```
+
+기념일 리그램은 사진 안에 글자를 굽지 않아요. `play.vue`가 여자친구의 "사랑해 💐 300일 동안 고마워" 원래 스토리와 `minsu_`의 "나도 사랑해" 답장을 겹쳐 보여 줍니다.
 
 #### stories/story-gym-son.webp (gym_daehyun 바디프로필)
 ```
 Vertical smartphone photo for a social media story, body profile photo shoot result day. A cluttered workbench in a modern photo studio seen from above at the upper right, a small monitor showing a photo selection program: one large main photo of a fit young Korean man posing in a gray tank top under studio light, and a row of small candidate thumbnails below it. Around the monitor: a camera body, a lens, a coffee cup, a protein shaker, cables. Soft studio lighting, clean neutral colors, casual phone snapshot feel. The upper third is calm with no important details. No readable text, no logos, no UI labels, 9:16
 ```
-
-아직 안 뽑았으면 그 자리는 사진 없이 어두운 배경에 스티커만 보여요.
 
 ### 이제 안 쓰는 그림
 - `letter-paper.webp`: 편지가 검은 화면의 흰 글씨로 바뀌어서 쓰지 않아요. 원본은 `assets/image-sources/`에 보관합니다.
