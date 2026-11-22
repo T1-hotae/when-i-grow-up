@@ -8,6 +8,7 @@ function fade(a: HTMLAudioElement, to: number, ms = 1500) {
   const from = a.volume
   const t0 = performance.now()
   const step = () => {
+    if (to > 0 && a !== current) return // 커지는 도중에 다른 곡으로 바뀌면 멈춘다 (줄이는 페이드가 끄게 둔다)
     const k = Math.min(1, (performance.now() - t0) / ms)
     a.volume = from + (to - from) * k
     if (k < 1) requestAnimationFrame(step)
@@ -26,7 +27,7 @@ export function bgm(name: string) {
   a.muted = muted.value
   // 휴대폰은 한 번 누르기 전엔 소리를 못 낸다: 막히면 첫 터치 때 다시 튼다
   const start = () => {
-    if (a === current) a.play().then(() => fade(a, VOLUME)).catch(() => addEventListener('pointerdown', start, { once: true }))
+    if (a === current) a.play().then(() => a === current ? fade(a, VOLUME) : a.pause()).catch(() => addEventListener('pointerdown', start, { once: true }))
   }
   start()
 }
