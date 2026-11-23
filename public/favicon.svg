@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="접은 별">
+  <rect width="256" height="256" rx="54" fill="#0b1020"/>
+  <path d="M128 32 151 96 219 98 165 139 185 207 128 169 71 207 91 139 37 98 105 96Z" fill="#ffcf8a"/>
+  <path d="M128 32 128 169 91 139 37 98 105 96Z" fill="#fff1cf"/>
+  <path d="M128 32 151 96 219 98 165 139 128 169Z" fill="#ffdba0"/>
+  <path d="M128 32v137M37 98l91 71 91-71M71 207l57-38 57 38" fill="none" stroke="#bd804f" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" opacity=".58"/>
+</svg>
