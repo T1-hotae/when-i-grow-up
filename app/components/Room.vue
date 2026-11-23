@@ -18,6 +18,7 @@ const props = defineProps<{
   laptopClosed: boolean
   phoneOn: boolean // 이불 속 폰 빛
   starsGlow: number // 0~1, 천장 야광별 밝기
+  myStar: boolean // 깨어남: 꿈에서 접어 띄운 편지 별처럼 야광별 하나만 환하다
   brightness: number // 0~1, 어른 방 물건을 보여 줄수록 밝아진다
   drawer: boolean // 장면 3: 그림일기가 든 서랍이 열린다
   morning: boolean // 깨어남: 아침 햇빛
@@ -69,7 +70,7 @@ const blanketGeo = new PlaneGeometry(1.3, 1.75, 64, 64).rotateX(-Math.PI / 2)
 
 // 루프가 움직이는 물체는 위치 배열을 상수로 둔다 (다시 그릴 때 값이 덮어써지지 않게)
 const START = views.room.pos.toArray()
-const WINDOW_AT = [0.65, 1.75, -0.5] as const // 답장 별은 창밖으로 나간다
+const WINDOW_AT = [0.65, 1.75, -0.5] as const // 편지 별은 창밖으로 나간다
 const SKY_SPOT = new Vector3(0.6, 9, -7)
 const DRAWER_IN = new Vector3(0.35, 0.66, 0.05)
 const DRAWER_OUT = new Vector3(0.35, 0.66, 0.35)
@@ -153,9 +154,9 @@ onBeforeRender(({ delta }) => {
     <TresMeshStandardMaterial :color="c.ceiling" :side="2" />
   </TresMesh>
   <!-- 천장 야광별 -->
-  <TresMesh v-for="(s, i) in GLOW_STARS" :key="i" :position="s.pos" :rotation-x="Math.PI / 2" :scale="s.s">
+  <TresMesh v-for="(s, i) in GLOW_STARS" :key="i" :position="s.pos" :rotation-x="Math.PI / 2" :scale="myStar && i === 4 ? s.s * 1.4 : s.s">
     <TresCircleGeometry :args="[0.05, 5]" />
-    <TresMeshBasicMaterial color="#d8ffb8" transparent :opacity="0.15 + starsGlow * 0.85" :side="2" />
+    <TresMeshBasicMaterial :color="myStar && i === 4 ? '#ffcf8a' : '#d8ffb8'" transparent :opacity="myStar && i === 4 ? 1 : 0.15 + starsGlow * 0.85" :side="2" />
   </TresMesh>
 
   <!-- 창문: 창밖 그림, 유리, 창틀 (불이 켜지는 건 CityWindow.vue가 화면 가득 보여 준다) -->

@@ -5,7 +5,7 @@ import { scene3 } from '~/data/script'
 defineProps<{ lit: number, focus: boolean }>()
 const ON = '/images/scenes/window-city.webp'
 const OFF = '/images/scenes/window-city-off.webp'
-const noOff = ref(false) // window-city-off를 아직 안 뽑았으면 켜진 그림을 어둡게 깔아 대신한다
+const noOff = ref(false) // 불 꺼진 그림을 불러오지 못했을 때 켜진 그림을 어둡게 깔아 대신한다
 const spots = scene3.window.spots.map(([x, y, w, h]) => ({
   left: `${x}%`,
   top: `${y}%`,

@@ -125,9 +125,14 @@ Children playing on a school playground: a slide, a swing, a soccer ball, three 
 "Me when I grow up": a grown-up fashion designer holding up a colorful dress on a hanger, a mannequin and rolls of fabric beside, scissors and a measuring tape. The figure is simple and gender-neutral. A drawing made by a 10-year-old child with crayons and colored pencils on slightly yellowed drawing paper, simple wobbly lines, uneven coloring that goes outside the lines, naive proportions, bright primary colors, visible paper texture, flat scan from directly above, the whole sheet visible with a thin margin, no text, no letters, no signature
 ```
 
-### dream-unknown.webp (기억이 안 나 → 문방구 주인)
+### dream-unknown.webp (기억이 안 나 → 직업 없는 범용 그림, 일기 글의 직업은 흐릿하게)
 ```
-"Me when I grow up": a grown-up stationery shop owner in an apron standing in front of a small school-front stationery shop, colorful toys, candy jars and a capsule toy machine outside, the shop sign shows only a drawing of a pencil with no letters, happy kids around. The figure is simple and gender-neutral. A drawing made by a 10-year-old child with crayons and colored pencils on slightly yellowed drawing paper, simple wobbly lines, uneven coloring that goes outside the lines, naive proportions, bright primary colors, visible paper texture, flat scan from directly above, the whole sheet visible with a thin margin, no text, no letters, no signature
+"Me when I grow up": a simple gender-neutral grown-up standing on a small green hill with both arms open wide and a big smile, plain everyday clothes with no uniform, no tools and no props that hint at any job, a big smiling sun, bumpy clouds, a few flowers and a winding path leading off the page. A drawing made by a 10-year-old child with crayons and colored pencils on slightly yellowed drawing paper, simple wobbly lines, uneven coloring that goes outside the lines, naive proportions, bright primary colors, visible paper texture, flat scan from directly above, the whole sheet visible with a thin margin, no text, no letters, no signature
+```
+
+### dream-unknown-daughter.webp (딸 경로)
+```
+Same composition and childlike crayon style as dream-unknown.webp, but the grown-up is a woman with simple shoulder-length wavy hair and a plain bright red everyday shirt and pants. Keep the small green hill, open arms, big smile, smiling sun, bumpy clouds, flowers, winding path, yellowed paper, and full-sheet overhead scan. No uniform, tools, job props, text, letters, or signature.
 ```
 
 ## 3. 결과 카드 (12장)
@@ -259,4 +264,20 @@ Vertical smartphone photo for a social media story, body profile photo shoot res
 ## 지금은 안 뽑는 것
 
 - 밤하늘: 장면 4의 별은 3D로 만들어요 (InstancedMesh). 그림은 필요 없어요.
-- 책상 소품(컵라면, 포스트잇): 배경을 투명하게 뽑아야 해서 손이 많이 가요. 방이 허전하면 그때 추가합니다.
+
+## 장면 2 물건 그림 (6장)
+
+`public/images/objects/object-<이름>.webp`에 512×512 투명 WebP로 둡니다. 원본 PNG는 `assets/image-sources/object-<이름>.png`에 있습니다. 선택지에서는 작은 아이콘으로, 물건을 보여 줄 때는 화면 위쪽의 큰 그림으로 씁니다.
+
+공통 프롬프트: `Small collectible object icon for a Korean interactive bedtime story; hand-painted soft gouache with slightly imperfect edges and subtle paper grain; cozy deep-navy nighttime palette and warm amber lamplight; exactly one complete centered object in gentle three-quarter view; generous genuinely transparent padding; readable at 48px and 160px; no floor, scenery, labels, lettering, logos, border, extra objects, or shadow outside the object.`
+
+| 파일 | 물건 요청 문장 |
+| --- | --- |
+| `object-coffee` | A half-finished ceramic coffee mug with coffee visible and a little moon-and-cloud decoration. |
+| `object-suit` | A charcoal-navy interview suit jacket and cream shirt on one wooden hanger. |
+| `object-vitamins` | An amber glass vitamin bottle with plain cream cap and two tablets. |
+| `object-ramen` | A short stack of two plain paper instant noodle cups, peeled lid, and chopsticks. |
+| `object-gamepad` | A slightly dusty retro handheld game console with an unlit screen. |
+| `object-camera` | A slightly dusty vintage 35mm film camera with a round lens. |
+
+`window-city-off.webp`는 `window-city.webp`를 편집 대상으로 삼아 노란 창문과 가게 불만 끈 버전입니다. 건물·창문 위치, 달, 가로등, 붓질, 구도는 최대한 보존하도록 요청했고, 생성 원본은 `assets/image-sources/window-city-off.png`에 있습니다. `CityWindow.vue`가 원래 켜진 그림의 창문 조각을 그 위에 순서대로 올립니다.

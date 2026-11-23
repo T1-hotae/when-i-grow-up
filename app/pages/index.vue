@@ -7,6 +7,7 @@ const asking = ref(false)
 const who = ref<HTMLElement>()
 async function start() {
   asking.value = true
+  try { sessionStorage.removeItem('when-i-grow-up:save') } catch {} // 첫 화면에서 시작하면 새 이야기 (play.vue 세이브 포인트)
   await nextTick()
   who.value?.querySelector('a')?.focus() // 키보드 사용자가 바로 고를 수 있게
 }

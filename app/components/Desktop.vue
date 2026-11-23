@@ -38,12 +38,19 @@ const clock = computed(() => props.popup ? p.value.night.at : props.msgs.at(-1)?
 
     <Transition name="drop">
       <aside v-if="popup" class="popup" role="status">
+        <header>
+          <span>{{ p.who }}</span>
+          <button class="off" aria-label="알림 끄기" @click.stop="emit('dismiss')">🔔</button>
+          <button class="x" aria-label="알림 닫기" @click.stop="emit('dismiss')">✕</button>
+        </header>
         <button class="open" :aria-label="`${p.who} 메시지 열기`" @click.stop="emit('open')">
           <span class="avatar" aria-hidden="true">{{ p.who[0] }}</span>
           <span class="text"><b>{{ p.who }}</b><span>{{ p.night.text }}</span></span>
         </button>
-        <button class="x" aria-label="알림 닫기" @click.stop="emit('dismiss')">✕</button>
-        <button class="off" @click.stop="emit('dismiss')">알림 끄기</button>
+        <!-- 답장 칸도 누르면 채팅이 열린다 -->
+        <button class="reply" tabindex="-1" aria-hidden="true" @click.stop="emit('open')">
+          <span>메시지 입력</span><span class="send">전송</span>
+        </button>
       </aside>
     </Transition>
 
@@ -108,19 +115,25 @@ const clock = computed(() => props.popup ? p.value.night.at : props.msgs.at(-1)?
   right: 12px;
   bottom: 56px;
   z-index: 2;
-  width: 260px;
-  border-radius: 10px;
+  width: min(400px, calc(100% - 24px));
+  border-radius: 6px;
   background: #fff;
   color: #191919;
   box-shadow: 0 10px 30px rgb(0 0 0 / 0.45);
 }
+/* PC 카톡 알림창: 방 이름 줄 / 보낸 사람 / 답장 칸 */
 .popup button { border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
-.popup .open { display: flex; gap: 10px; align-items: center; width: 100%; padding: 12px 36px 10px 12px; text-align: left; }
-.popup .avatar { flex: none; width: 36px; height: 36px; border-radius: 13px; display: grid; place-items: center; background: #f2a7a7; color: #fff; font-weight: 700; }
-.popup .text b { display: block; font-size: 0.8rem; }
-.popup .text span { display: block; margin-top: 2px; font-size: 0.85rem; }
-.popup .x { position: absolute; top: 4px; right: 4px; width: 32px; height: 32px; color: #999; }
-.popup .off { display: block; width: 100%; padding: 8px; border-top: 1px solid #eee; color: #888; font-size: 0.75rem; }
+.popup header { display: flex; align-items: center; gap: 4px; padding: 10px 8px 0 16px; font-size: 0.9rem; font-weight: 700; }
+.popup header span { flex: 1; }
+.popup header button { width: 36px; height: 36px; color: #aaa; font-size: 1.1rem; }
+.popup .off { filter: grayscale(1) opacity(0.5); }
+.popup .open { display: flex; gap: 14px; align-items: center; width: 100%; padding: 10px 16px 18px; text-align: left; }
+.popup .avatar { flex: none; width: 56px; height: 56px; border-radius: 20px; display: grid; place-items: center; background: #f2a7a7; color: #fff; font-size: 1.3rem; font-weight: 700; }
+.popup .text { min-width: 0; }
+.popup .text b { display: block; font-size: 1.05rem; }
+.popup .text span { display: block; margin-top: 4px; font-size: 1rem; color: #888; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.popup .reply { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 12px 12px 12px 16px; border-top: 1px solid #eee; color: #aaa; font-size: 0.95rem; }
+.popup .send { padding: 8px 16px; border-radius: 4px; background: #f2f2f2; color: #bbb; }
 .popup button:focus-visible { outline: 2px solid #2b5fd9; outline-offset: -2px; }
 /* 올라올 땐 아래에서, 사라질 땐 다시 아래로 */
 .drop-enter-active, .drop-leave-active { transition: transform 0.4s, opacity 0.4s; }

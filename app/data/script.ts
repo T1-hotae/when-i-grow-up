@@ -16,7 +16,7 @@ export type Dream = {
 
 export const landing = {
   title: '어른이 되면',
-  lines: ['어젯밤 꿈에 열 살의 내가 나왔어요.', '"꿈꾸던 어른이 되었나요?"'],
+  lines: ['어젯밤 꿈에 열 살의 내가 나왔어요.', '"나 커서 뭐가 됐어?"'],
   start: '시작하기',
   ask: '나는…',
   me: { daughter: '여자', son: '남자' } satisfies Record<Me, string>,
@@ -116,6 +116,7 @@ export const scene1 = {
   forgot: '(내 꿈이 뭐였더라…?)',
   input: { placeholder: '열 살 때 꿈을 적어 주세요', submit: '이거였어', max: 20 },
   confirm: (name: string) => `맞아! 내 꿈은 ${name}${hasBatchim(name) ? '이었지' : '였지'}.`,
+  confirmForgot: '음… 나도 잘 기억 안 나. 일기장에 적어 놨었는데.', // 일기 1쪽에서 직업 글자가 흐릿하게 나온다
   reply: '어? 내 목소리 들리는 거야? 대박. 진짜 어른 된 나야?',
 }
 
@@ -213,42 +214,42 @@ export const scene2 = {
   pick: '뭐부터 보여 줄까?',
   things: [
     {
-      emoji: '☕', name: '식은 커피', ask: '이 까만 물은 뭐야? 냄새가 써.',
+      image: '/images/objects/object-coffee.webp', name: '식은 커피', ask: '커피다! 엄마가 애들 마시면 키 안 큰댔는데. 너 이거 맨날 마셔?',
       answers: [
-        { text: '어른들이 마시는 커피', reply: '어른들은 쓴 거 왜 마셔? 벌 받는 거야?' },
-        { text: '잠 깨는 물', reply: '잠을 왜 깨? 잠은 좋은 건데.' },
-        { text: '초코우유야', reply: '거짓말. 아까 한 입 먹고 인상 썼잖아.' },
+        { text: '응, 하루에 세 잔', reply: '세 잔?! 아빠보다 많이 마시네.' },
+        { text: '안 마시면 졸려', reply: '그럼 자면 되잖아. 잠은 좋은 건데.' },
+        { text: '맛있어서 마셔', reply: '거짓말. 다 식었는데 반도 안 마셨잖아.' },
       ] satisfies Answer[],
     },
     {
-      emoji: '👔', name: '문에 걸린 정장', ask: '이 옷은 왜 이렇게 딱딱해? 결혼식 가?',
+      image: '/images/objects/object-suit.webp', name: '문에 걸린 정장', ask: '와, 정장이다! 누구 결혼식 가?',
       answers: [
-        { text: '면접 볼 때 입는 옷', reply: '면접이 뭐야? 교무실 불려 가는 거야?' },
-        { text: '어른으로 변신하는 옷', reply: '오, 이거 입으면 어른 모드 되는 거구나.' },
+        { text: '면접 볼 때 입어', reply: '회사 면접? 떨려? 나는 앞에 나가서 발표할 때 엄청 떨리던데.' },
+        { text: '입으면 어른 같아 보여', reply: '그럼 나도 입으면 어른 돼? 소매가 엄청 길겠다.' },
         { text: '아무것도 아니야', reply: '근데 왜 문에 잘 보이게 걸어 놨어?' },
       ] satisfies Answer[],
     },
     {
-      emoji: '💊', name: '영양제 통', ask: '사탕 통이다! 하나 먹어도 돼?',
+      image: '/images/objects/object-vitamins.webp', name: '영양제 통', ask: '이거 엄마가 맨날 먹으라던 거다. 너 어디 아파?',
       answers: [
-        { text: '사탕 아니고 영양제야', reply: '어른은 사탕 대신 이거 먹어? 슬프다.' },
-        { text: '어른 되면 먹어', reply: '어른 되면 이거 먹어야 돼? 나 그냥 안 클래.' },
-        { text: '안 돼, 내 거야', reply: '치사해. 나는 친구들한테 다 나눠 줬는데.' },
+        { text: '안 아프려고 먹어', reply: '아프기 전에 먹는 거야? 어른은 걱정이 많네.' },
+        { text: '먹으면 힘 날까 봐', reply: '나는 급식 다 먹으면 힘 나는데.' },
+        { text: '사실 맨날 까먹어', reply: '그럼 내가 알림장에 써 줄게. 나 그거 잘 써.' },
       ] satisfies Answer[],
     },
     {
-      emoji: '📄', name: '뽑아 둔 이력서', ask: '여기 내 이름 있다! 상장이야?',
+      image: '/images/objects/object-ramen.webp', name: '쌓인 컵라면', ask: '우와, 컵라면 탑이다! 맨날 이거 먹어? 부럽다!',
       answers: [
-        { text: '나를 소개하는 종이', reply: '근데 좋아하는 거 칸이 없네? 나 떡볶이 좋아하는데.' },
-        { text: '시험지 같은 거', reply: '몇 점 받았어? 동그라미 많이 받았어?' },
-        { text: '응, 상장이야', reply: '근데 왜 도장이 없어? 상장엔 도장 찍어야지.' },
+        { text: '밥 할 시간이 없어', reply: '엄마가 컵라면만 먹으면 머리 나빠진댔어.' },
+        { text: '이게 제일 빨라', reply: '빨리 먹고 어디 가는데? 노는 것도 아니잖아.' },
+        { text: '맛있어서', reply: '그치! 근데 국물은 왜 다 남겼어?' },
       ] satisfies Answer[],
     },
   ],
   // 마지막 물건은 성별마다 다르다
   hobby: {
     son: {
-      emoji: '🎮', name: '먼지 쌓인 게임기', ask: '우와, 게임기다! 근데 왜 먼지가 있어?',
+      image: '/images/objects/object-gamepad.webp', name: '먼지 쌓인 게임기', ask: '우와, 게임기다! 근데 왜 먼지가 있어?',
       answers: [
         { text: '요즘 할 시간이 없어', reply: '그럼 내가 대신 깨 놓을게. 세이브 해 둘게.' },
         { text: '혼자 하니까 재미없어', reply: '그럼 나랑 하자! 나 진짜 잘해.' },
@@ -256,7 +257,7 @@ export const scene2 = {
       ] satisfies Answer[],
     },
     daughter: {
-      emoji: '📷', name: '먼지 쌓인 필름카메라', ask: '우와, 카메라다! 근데 왜 먼지가 있어?',
+      image: '/images/objects/object-camera.webp', name: '먼지 쌓인 필름카메라', ask: '우와, 카메라다! 근데 왜 먼지가 있어?',
       answers: [
         { text: '요즘 찍을 시간이 없어', reply: '그럼 내가 대신 찍어 줄게. 너 웃는 거.' },
         { text: '혼자 찍으니까 재미없어', reply: '그럼 나 찍어 줘! 나 브이 진짜 잘해.' },
@@ -268,7 +269,8 @@ export const scene2 = {
   done: ['이제 좀 보인다.', '근데 어른 방 생각보다 좁다?'],
 }
 
-export type DiaryPaper = { date: string, weather: string, image?: string }
+// blur: 흐릿하게 쓸 칸 [시작, 끝) (기억 안 나는 꿈), label: 그림 대신 그림 칸에 크레용으로 쓸 말(목록에 없는 꿈)
+export type DiaryPaper = { date: string, weather: string, image?: string, blur?: [number, number], label?: string }
 
 // 장면 3. 밀린 그림일기 숙제 → 창밖. 일이 일어날 때마다 아이의 부탁이나 내 버튼이 먼저 온다. 한 번에 4줄을 넘기지 않는다
 export const scene3 = {
@@ -352,9 +354,9 @@ export const scene3 = {
   ],
 }
 
-// 장면 4. 답장
+// 장면 4. 별 편지: 위로 A의 "가장 빛나는 별"과 처음 본 천장 야광별에 이어진다
 export const scene4 = {
-  intro: ['이제 네 차례야. 나한테 답장 써 줘.', '깨면 까먹을 테니까, 꼭.'],
+  intro: ['아 맞다, 나 이제 가야 되는데.', '가기 전에 한 줄만 써 줘. 어른 된 내가 나한테 해 주는 말.'],
   replies: [
     '어른도 생각보다 잘 몰라. 그래도 괜찮아.',
     '꿈은 좀 바뀌었는데, 네 마음은 그대로야.',
@@ -363,9 +365,10 @@ export const scene4 = {
     '어른 돼도 피망은 아직 싫어. 미안.',
   ],
   freeLine: { max: 30, placeholder: '한 줄 더 쓸 수도 있어요 (나만 봐요)' },
-  action: '별로 접어서 보내기',
-  sentCount: (n: number) => `지금까지 ${n}명이 열 살의 자신에게 답장을 보냈어요.`, // 2단계: 서버가 생기면 보여 준다
-  farewell: (who: string) => [`답장 고마워. 나 이제 일어나야 돼. ${who}가 깨워.`, '너도 일어나. 아침이야.'], // who: 엄마/아빠
+  fold: ['이거 별로 접어서 저 하늘에 붙여 놓을게.', '그럼 나 크는 동안 밤마다 볼 수 있잖아.'], // 고른 뒤
+  action: '별로 접어 주기',
+  sentCount: (n: number) => `지금까지 ${n}명이 열 살의 자신에게 편지를 보냈어요.`, // 2단계: 서버가 생기면 보여 준다
+  farewell: (who: string) => [`편지 고마워. 나 이제 일어나야 돼. ${who}가 깨워.`, '너도 일어나. 아침이야.'], // who: 엄마/아빠
 }
 
 // 깨어남
@@ -428,4 +431,6 @@ export const scene5 = {
   proudLabel: '요즘 잘한 일',
   buttons: { kakao: '카카오톡으로 보내기', save: '이미지 저장', others: '다른 유형 구경하기' },
   helpline: '많이 힘들 땐 혼자 버티지 말아요. 자살예방 상담전화 109',
+  // 카카오페이 송금 링크. 비우면 버튼이 안 보인다
+  coffee: { label: '만든 사람에게 커피 한 잔 ☕', url: 'https://qr.kakaopay.com/FQkHrK05T' },
 }

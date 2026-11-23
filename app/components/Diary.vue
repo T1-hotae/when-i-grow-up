@@ -6,6 +6,7 @@ const props = defineProps<DiaryPaper & { text: string, stamp: boolean }>()
 const COLS = 12
 const CELLS = COLS * 6 // 가장 긴 일기(직접 쓴 꿈 20자 + 마음)도 들어간다
 const cells = computed(() => [...props.text].slice(0, CELLS).concat(Array(CELLS).fill('')).slice(0, CELLS))
+const blurred = (i: number) => !!props.blur && i >= props.blur[0] && i < props.blur[1]
 </script>
 
 <template>
@@ -17,12 +18,13 @@ const cells = computed(() => [...props.text].slice(0, CELLS).concat(Array(CELLS)
     <figure>
       <!-- 아직 안 뽑은 그림은 빈 도화지로 둔다 -->
       <img v-if="image" :src="image" alt="" @error="(e) => ((e.target as HTMLElement).style.visibility = 'hidden')">
+      <p v-else-if="label" class="crayon"><span aria-hidden="true">★</span>{{ label }}<span aria-hidden="true">♥</span></p>
       <div v-if="stamp" class="stamp" role="img" aria-label="참 잘했어요 도장">
         참<br>잘했어요
       </div>
     </figure>
     <p class="grid" :style="{ gridTemplateColumns: `repeat(${COLS}, 1fr)` }">
-      <span v-for="(c, i) in cells" :key="i">{{ c }}</span>
+      <span v-for="(c, i) in cells" :key="i" :class="{ blur: blurred(i) }">{{ c }}</span>
     </p>
     <p class="sr-only">{{ text }}</p>
   </article>
@@ -71,6 +73,27 @@ figure img { width: 100%; height: 100%; object-fit: cover; display: block; }
   font-size: 5.6cqw;
   line-height: 1;
 }
+/* 기억 안 나는 꿈: 지우개로 문댄 연필 글씨 */
+.grid span.blur { filter: blur(2.5px); opacity: 0.7; }
+/* 목록에 없는 꿈: 그림 대신 크레용으로 크게 쓴 꿈 */
+.crayon {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4cqw;
+  padding: 0 6cqw;
+  color: #e0573c;
+  font-size: 14cqw;
+  line-height: 1.1;
+  text-align: center;
+  word-break: keep-all;
+  transform: rotate(-4deg);
+}
+.crayon span { color: #f2b632; font-size: 9cqw; }
+.crayon span:last-child { color: #e86a92; }
 .stamp {
   position: absolute;
   right: 6%;
