@@ -802,7 +802,7 @@ const save = () => saveCard(result.dream, result.things, result.proud)
   overflow-y: auto;
   box-sizing: border-box;
   padding: 20px 22px;
-  border: 1px solid rgb(255 255 255 / 0.1);
+  border: 0;
   border-radius: 18px;
   background: rgb(8 10 22 / 0.6);
   backdrop-filter: blur(12px);
@@ -819,7 +819,6 @@ const save = () => saveCard(result.dream, result.things, result.proud)
   width: 100%;
   box-sizing: border-box;
   border: 0;
-  border-bottom: 1px dashed #ffcf8a;
   background: transparent;
   font: inherit;
   color: #ffcf8a;
@@ -840,22 +839,23 @@ const save = () => saveCard(result.dream, result.things, result.proud)
   align-items: center;
   gap: 12px;
   padding: 13px 18px;
-  border: 1px solid rgb(255 255 255 / 0.22);
+  border: 0;
   border-radius: 12px;
-  background: rgb(0 0 0 / 0.28);
+  background: rgb(255 255 255 / 0.1);
   backdrop-filter: blur(10px);
   text-align: left;
   animation: pop 0.35s both;
 }
 .object-option { flex: none; width: 32px; height: 32px; object-fit: contain; }
-.choices button:hover { border-color: rgb(255 255 255 / 0.7); background: rgb(255 255 255 / 0.08); }
+.choices button:hover { background: rgb(255 255 255 / 0.2); }
 .choices button:active, .answer button:active, .actions > *:active { transform: scale(0.98); }
 .actions .primary, .answer .field button {
   padding: 14px 28px;
   border: 0;
   border-radius: 999px;
-  background: #fff;
-  color: #111;
+  background: rgb(255 255 255 / 0.18);
+  backdrop-filter: blur(8px);
+  color: #fff;
   font-weight: 700;
   text-align: center;
 }
@@ -868,34 +868,33 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
   display: grid;
   gap: 16px;
   padding: 20px;
-  border: 1px solid rgb(255 255 255 / 0.1);
-  border-radius: 24px;
-  background: linear-gradient(160deg, rgb(255 255 255 / 0.08), rgb(255 255 255 / 0.02)), rgb(10 12 28 / 0.55);
-  backdrop-filter: blur(18px);
-  box-shadow: 0 20px 50px rgb(0 0 0 / 0.45), inset 0 1px 0 rgb(255 255 255 / 0.08);
+  border: 0;
+  border-radius: 28px;
+  background: rgb(14 12 22 / 0.6);
+  backdrop-filter: blur(20px);
   animation: pop 0.35s both;
 }
-.answer-label { margin: 0; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; color: rgb(255 255 255 / 0.5); text-align: center; }
+.answer-label { margin: 0; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; color: rgb(255 255 255 / 0.6); text-align: center; }
 /* 입력과 버튼을 알약 하나로 묶는다 */
 .field {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 5px 5px 5px 18px;
-  border: 1px solid rgb(255 255 255 / 0.14);
+  padding: 6px 6px 6px 20px;
+  border: 0;
   border-radius: 999px;
-  background: rgb(0 0 0 / 0.25);
-  transition: border-color 0.2s, background 0.2s;
+  background: rgb(255 255 255 / 0.06);
+  transition: background 0.2s;
 }
-.field:focus-within { border-color: rgb(255 207 138 / 0.6); background: rgb(0 0 0 / 0.35); }
-.field input { flex: 1; min-width: 0; padding: 8px 0; border: 0; background: none; color: #fff; font: inherit; font-size: 1.05rem; }
-.field input::placeholder { color: rgb(255 255 255 / 0.4); }
-.field input:focus-visible { outline: none; } /* 포커스는 .field 테두리로 보인다 */
-.answer .field button { padding: 10px 18px; font-size: 0.95rem; }
+.field:focus-within { background: rgb(255 255 255 / 0.12); }
+.field input { flex: 1; min-width: 0; padding: 8px 0; border: 0; background: none; color: #fff; caret-color: #fff; font: inherit; font-size: 1.05rem; }
+.field input::placeholder { color: rgb(255 255 255 / 0.35); }
+.field input:focus-visible { outline: none; } /* 포커스는 .field 배경이 밝아지는 걸로 보인다 */
+.answer .field button { padding: 10px 20px; font-size: 0.95rem; }
 .chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .chips button {
   padding: 10px 4px;
-  border: 1px solid rgb(255 255 255 / 0.08);
+  border: 0;
   border-radius: 14px;
   background: rgb(255 255 255 / 0.05);
   color: rgb(255 255 255 / 0.8);
@@ -903,7 +902,7 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
   white-space: nowrap;
 }
 .chips button:hover { background: rgb(255 255 255 / 0.1); color: #fff; }
-.chips button.on { border-color: rgb(255 207 138 / 0.7); background: rgb(255 207 138 / 0.15); color: #ffcf8a; }
+.chips button.on { background: rgb(255 255 255 / 0.22); color: #fff; }
 
 /* 이불 속 인스타 스토리 */
 .stories {
@@ -1063,20 +1062,17 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
   align-items: center;
   justify-content: safe center; /* safe: 화면이 작아 넘치면 위가 잘리지 않게 위쪽부터 */
   gap: 14px;
-  /* 카드 뒤가 은은하게 밝은 새벽빛 */
-  background:
-    radial-gradient(ellipse 60% 45% at 50% 38%, rgb(255 214 150 / 0.18), transparent 70%),
-    radial-gradient(ellipse at 50% 40%, rgb(40 50 100 / 0.55), rgb(6 9 22 / 0.88) 75%);
   animation: pop 0.6s both;
 }
 /* 카드가 먼저 떠오르고, 버튼들이 뒤따라 나타난다 */
 .result > .actions { animation: pop 0.6s 0.7s both; }
 .result > .coffee, .result > .help { animation: pop 0.6s 1s both; }
 .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
-.actions > * { padding: 10px 16px; border: 1px solid rgb(255 255 255 / 0.25); border-radius: 999px; background: rgb(255 255 255 / 0.12); backdrop-filter: blur(8px); }
-.actions > *:hover { background: rgb(255 255 255 / 0.2); border-color: rgb(255 255 255 / 0.4); }
-.actions > .primary:hover { background: #fff7e8; }
+.actions > * { padding: 10px 16px; border: 0; border-radius: 999px; background: rgb(255 255 255 / 0.12); backdrop-filter: blur(8px); }
+.actions > *:hover { background: rgb(255 255 255 / 0.24); }
 .toast { margin: 0; font-size: 0.9rem; }
+/* 세이브 포인트 알림: 오른쪽 위 소리 버튼과 겹치지 않게 왼쪽 위 */
+.saved { position: absolute; top: 20px; left: 16px; z-index: 21; margin: 0; color: #fff; font-size: 0.8rem; opacity: 0.75; text-shadow: 0 1px 6px rgb(0 0 0 / 0.9); pointer-events: none; }
 .coffee {
   color: #ffe2b0;
   font-family: Gaegu, cursive;

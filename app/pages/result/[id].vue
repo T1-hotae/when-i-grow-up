@@ -55,5 +55,5 @@ nav a {
   text-decoration: none;
   font-size: 1.1rem;
 }
-nav .start { padding: 12px 24px; background: #ffcf8a; color: #2a1d10; font-weight: 700; font-size: 1rem; }
+nav .start { padding: 12px 24px; background: rgb(255 255 255 / 0.18); font-weight: 700; font-size: 1rem; }
 </style>

@@ -71,7 +71,7 @@ p { margin: 0; color: #f1eee8; font-size: clamp(1.05rem, 1.6vw, 1.25rem); line-h
   min-height: 60px;
   box-sizing: border-box;
   padding: 8px 8px 8px 28px;
-  border: 1px solid rgb(255 255 255 / 0.35);
+  border: 0;
   border-radius: 999px;
   background: rgb(255 255 255 / 0.14);
   backdrop-filter: blur(14px) saturate(1.4);
@@ -92,12 +92,12 @@ p { margin: 0; color: #f1eee8; font-size: clamp(1.05rem, 1.6vw, 1.25rem); line-h
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: #ffcf8a;
-  color: #2a1d10;
+  background: rgb(255 255 255 / 0.18);
+  color: #fff;
   font-size: 1.1rem;
   transition: transform 0.25s ease;
 }
-.start:hover { transform: translateY(-2px); background: rgb(255 255 255 / 0.22); box-shadow: 0 14px 44px rgb(0 0 0 / 0.35), 0 0 0 4px rgb(255 207 138 / 0.18), inset 0 1px 0 rgb(255 255 255 / 0.3); }
+.start:hover { transform: translateY(-2px); background: rgb(255 255 255 / 0.22); box-shadow: 0 14px 44px rgb(0 0 0 / 0.35), inset 0 1px 0 rgb(255 255 255 / 0.3); }
 .start:hover .arrow { transform: translateX(3px); }
 .start:active { transform: translateY(0) scale(0.98); }
 .start:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
