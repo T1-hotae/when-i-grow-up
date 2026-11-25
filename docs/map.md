@@ -74,7 +74,7 @@
 
 ## 소리 (public/audio)
 
-배경음악 `bgm/`(효과음 `sfx/`는 아직 없음). 재생은 [app/utils/bgm.ts](../app/utils/bgm.ts)의 `bgm('곡 이름')` 한 줄이고, 장면마다 play.vue `story()` 안에서 부릅니다. 소리 끄기 버튼은 [app.vue](../app/app.vue)에 있습니다. 프롬프트는 [bgm-prompts.md](bgm-prompts.md).
+배경음악 `bgm/`(효과음 `sfx/`는 아직 없음). 재생은 [app/utils/bgm.ts](../app/utils/bgm.ts)의 `bgm('곡 이름')` 한 줄이고, 장면마다 play.vue `story()` 안에서 부릅니다. 소리 끄기 버튼과 메뉴(메인으로 가기, 개발자 정보)는 오른쪽 위에 함께 있고, [app.vue](../app/app.vue)에 있습니다. 프롬프트는 [bgm-prompts.md](bgm-prompts.md).
 
 ## 개발 팁
 
