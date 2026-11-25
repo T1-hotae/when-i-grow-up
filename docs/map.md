@@ -1,7 +1,7 @@
 # 지도: 무슨 이야기고, 어디에 뭐가 있나
 
 처음 보는 사람(사람이든 에이전트든)이 이 파일 하나만 보고 고칠 파일을 바로 찾게 하는 문서입니다.
-자세한 대사는 [story.md](story.md), 왜 그렇게 정했는지는 [planning-session.md](planning-session.md)에 있습니다.
+자세한 대사는 [story.md](story.md), 왜 그렇게 정했는지는 [planning-session.md](planning-session.md)에 있습니다. 출시·홍보 계획은 [launch-plan.md](launch-plan.md).
 
 ## 이야기 한 줄
 
@@ -48,8 +48,8 @@
 - [app/pages/result/[id].vue](../app/pages/result/[id].vue): 공유 링크로 들어오는 결과 유형 페이지 (`/result/doctor` 등).
 - [app/utils/matchDream.ts](../app/utils/matchDream.ts): 직접 쓴 꿈 글자를 결과 유형 id와 다시 보여 줄 말(`dreams` 이름 또는 `kidDreams`)로 바꿈. 쓴 글 자체는 화면에 다시 안 나옴. 못 알아들으면 `unknown`, 말은 `''`.
 - [app/utils/saveCard.ts](../app/utils/saveCard.ts): 결과 카드를 png로 저장.
-- [nuxt.config.ts](../nuxt.config.ts): 페이지 제목·설명, 손글씨 글꼴.
 - [server/api/letters.post.ts](../server/api/letters.post.ts): 고른 답의 번호와 지금 가는 길(`path`)을 받는 API. 직접 쓴 글은 `path`만 받음(입력칸에 익명으로 모인다고 안내).
+- [nuxt.config.ts](../nuxt.config.ts): 페이지 제목·설명, 첫 화면 공유 미리보기(og), 손글씨 글꼴. 배포(`$production`)에선 Vercel Analytics 스크립트와 편지 저장소(Upstash Redis)를 켭니다. 사이트 주소는 맨 위 `SITE`.
 - [public/favicon.svg](../public/favicon.svg): 별 편지 모티프의 브라우저 아이콘. `favicon.ico`와 `apple-touch-icon.png`도 같은 그림이며 `nuxt.config.ts`에서 연결합니다.
 
 ## 결과 유형 (꿈)
