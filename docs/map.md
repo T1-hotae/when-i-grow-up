@@ -17,19 +17,19 @@
 | 0-1 노트북 | 탈락 메일, 동기 단톡방, 부모 알림(숨은 길: 4초 안에 누르면 하소연) → 노트북 덮기 | `scene0.desk`, `family` | [Desktop.vue](../app/components/Desktop.vue), [Messenger.vue](../app/components/Messenger.vue) |
 | 0-2 이불 속 폰 | 친구들 인스타 스토리 넘기기 | `scene0.bed` | play.vue 템플릿 안 (스토리 화면) |
 | 0-3 천장 | 야광별 보다 잠듦 (눈꺼풀 감기) | `scene0.ceiling` | [Room.vue](../app/components/Room.vue) (`view: 'ceiling'`) |
-| 1 꿈속 검은 화면 | 열 살의 나와 대화, 어릴 적 꿈 적기 | `scene1`, `dreams` | play.vue 템플릿 (대사·입력창). 아이 말은 화면 가운데 `.kid`, 내 말(속마음·고른 대답)과 선택지는 아래 `.bottom` (장면 1~4 공통) |
+| 1 꿈속 검은 화면 | 열 살의 나와 대화("어떻게 지내?"는 고르거나 직접 쓰기), 어릴 적 꿈 적기 | `scene1`, `dreams` | play.vue 템플릿 (대사·입력창). 아이 말은 화면 가운데 `.kid`, 내 말(속마음·고른 대답)과 선택지는 아래 `.bottom` (장면 1~4 공통) |
 | 2 어른 방 구경 | 아이가 내 방 물건을 하나씩 묻고 내가 대답을 고름 | `scene2` | play.vue 템플릿 (선택지, 물건 그림 `.thing`·`.object-option`) |
-| 3 그림일기 숙제 | 일기를 넘기며 꿈 속 "마음" 발견, 도장, 창밖 불빛. 일기는 가운데, 대사는 아래. 기억 안 나는 꿈은 직업 글자 흐림(`blur`), 목록에 없는 꿈은 그림 대신 크레용 글씨(`label`) | `scene3` | [Diary.vue](../app/components/Diary.vue), [CityWindow.vue](../app/components/CityWindow.vue) |
+| 3 그림일기 숙제 | 일기를 넘기며 꿈 속 "마음" 발견, 도장, 창밖 불빛. 일기는 가운데, 대사는 아래. 기억 안 나거나 목록에 없는 꿈은 직업 글자 흐림(`blur`), `kidDreams` 꿈은 그림 대신 크레용 글씨(`label`) | `scene3` | [Diary.vue](../app/components/Diary.vue), [CityWindow.vue](../app/components/CityWindow.vue) |
 | 4 별 편지 | 열 살의 나에게 한 줄 편지 고르기 → 별로 접어 하늘로 | `scene4` | play.vue 템플릿 |
 | 깨어남 | 아침, 부모 채팅에 답장 (숨은 길이면 밤새 온 답장) | `wake`, `family` | Room.vue, Messenger.vue |
-| 5 결과 카드 | ○○형 어른 카드, 공유·저장, 작은 후원 링크(`scene5.coffee.url`이 비면 숨김) | `scene5`, `dreams[id].type` | [ResultCard.vue](../app/components/ResultCard.vue) |
+| 5 결과 카드 | ○○형 어른 카드, 공유·저장, 작은 후원 링크(`scene5.coffee.url`이 비면 숨김) | `scene5`, `dreams[id].type` | [ResultCard.vue](../app/components/ResultCard.vue), [ending.css](../app/assets/css/ending.css) (새벽 도시 배경) |
 
 ## 세이브 포인트 (새로고침해도 이어 보기)
 
 `story()`는 장 함수 `night()` → `dream()` → `diaryScene()` → `outro()`로 나뉩니다. 장마다 맨 앞에 꼭 눌러야 하는 버튼(세이브 포인트)이 있습니다: **눈 감기**(`sleep`), **서랍 열기**(`drawer`), **창밖 보기**(`window`). 이 버튼은 밑줄로 표시됩니다.
 노트북 덮기와 폰 내려놓기는 아무 데나 탭해도 넘어갑니다(`next(글자)`).
 
-- 버튼이 뜨는 순간 그때까지의 대답을 sessionStorage(`when-i-grow-up:save`)에 저장합니다(`saveAt`). 탭을 닫으면 지워집니다.
+- 버튼이 뜨는 순간 그때까지의 대답을 sessionStorage(`when-i-grow-up:save`)에 저장합니다(`saveAt`). 탭을 닫으면 지워집니다. 저장되면 왼쪽 위에 "✓ 진행 상황이 저장됐어요"가 2.5초 떴다 사라집니다(`.saved`).
 - 새로고침하면 `load()`가 검사합니다. 필요한 대답이 하나라도 없거나 범위를 벗어나면, 또는 성별이 다르면 지우고 처음부터 시작합니다. 통과하면 `restore()`가 그 버튼 화면을 다시 만듭니다.
 - 저장하는 값이나 장 사이 화면 상태를 바꾸면 `Save`, `load()`, `restore()`를 같이 고칩니다. 대사 구조를 바꿔서 옛 저장이 맞지 않으면 `v`를 올립니다.
 - 첫 화면에서 시작하기를 누르거나 결과 카드에 도착하면 저장을 지웁니다.
@@ -46,7 +46,7 @@
 
 - [app/components/Room.vue](../app/components/Room.vue): 3D 방 전체(TresJS). 카메라 위치는 `view` prop(`room`, `screen`, `bed`, `ceiling`, `desk`, `window`, `sky`)으로 바꿉니다.
 - [app/pages/result/[id].vue](../app/pages/result/[id].vue): 공유 링크로 들어오는 결과 유형 페이지 (`/result/doctor` 등).
-- [app/utils/matchDream.ts](../app/utils/matchDream.ts): 직접 쓴 꿈 글자를 결과 유형 id로 바꿈. 못 알아들으면 `unknown`.
+- [app/utils/matchDream.ts](../app/utils/matchDream.ts): 직접 쓴 꿈 글자를 결과 유형 id와 다시 보여 줄 말(`dreams` 이름 또는 `kidDreams`)로 바꿈. 쓴 글 자체는 화면에 다시 안 나옴. 못 알아들으면 `unknown`, 말은 `''`.
 - [app/utils/saveCard.ts](../app/utils/saveCard.ts): 결과 카드를 png로 저장.
 - [server/api/letters.post.ts](../server/api/letters.post.ts): 고른 답의 번호만 받는 API. 직접 쓴 글은 받지 않음.
 - [nuxt.config.ts](../nuxt.config.ts): 페이지 제목·설명, 손글씨 글꼴.

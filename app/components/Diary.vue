@@ -4,9 +4,15 @@ import type { DiaryPaper } from '~/data/script'
 // 그림일기 한 쪽. play.vue가 글자를 한 글자씩 넘겨주고, 여기선 그리기만 한다
 const props = defineProps<DiaryPaper & { text: string, stamp: boolean }>()
 const COLS = 12
-const CELLS = COLS * 6 // 가장 긴 일기(직접 쓴 꿈 20자 + 마음)도 들어간다
+const CELLS = COLS * 6 // 가장 긴 일기(가장 긴 꿈 이름 + 마음)도 들어간다
 const cells = computed(() => [...props.text].slice(0, CELLS).concat(Array(CELLS).fill('')).slice(0, CELLS))
 const blurred = (i: number) => !!props.blur && i >= props.blur[0] && i < props.blur[1]
+// 흐린 칸의 글자는 DOM에 아예 넣지 않는다 (드래그·복사·읽어 주기로도 안 보이게)
+const said = computed(() => {
+  const t = [...props.text]
+  if (!props.blur || t.length <= props.blur[0]) return props.text
+  return t.slice(0, props.blur[0]).join('') + '(지워져서 안 보이는 글씨)' + t.slice(props.blur[1]).join('')
+})
 </script>
 
 <template>
@@ -24,9 +30,9 @@ const blurred = (i: number) => !!props.blur && i >= props.blur[0] && i < props.b
       </div>
     </figure>
     <p class="grid" :style="{ gridTemplateColumns: `repeat(${COLS}, 1fr)` }">
-      <span v-for="(c, i) in cells" :key="i" :class="{ blur: blurred(i) }">{{ c }}</span>
+      <span v-for="(c, i) in cells" :key="i" :class="{ blur: c && blurred(i) }">{{ blurred(i) ? '' : c }}</span>
     </p>
-    <p class="sr-only">{{ text }}</p>
+    <p class="sr-only">{{ said }}</p>
   </article>
 </template>
 
@@ -74,7 +80,7 @@ figure img { width: 100%; height: 100%; object-fit: cover; display: block; }
   line-height: 1;
 }
 /* 기억 안 나는 꿈: 지우개로 문댄 연필 글씨 */
-.grid span.blur { filter: blur(2.5px); opacity: 0.7; }
+.grid span.blur { background: radial-gradient(ellipse 45% 35% at 50% 55%, rgb(90 90 100 / 0.45), transparent); filter: blur(2px); }
 /* 목록에 없는 꿈: 그림 대신 크레용으로 크게 쓴 꿈 */
 .crayon {
   position: absolute;

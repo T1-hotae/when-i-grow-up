@@ -62,12 +62,19 @@ const s3 = scene3
 // sessionStorage라서 탭을 닫으면 지워진다. 필요한 대답이 하나라도 없거나 이상하면 지우고 처음부터.
 const SAVES = ['sleep', 'drawer', 'window'] as const // 눈 감기, 서랍 열기, 창밖 보기
 type At = typeof SAVES[number]
-type Save = { v: 1, at: At, me: Me, hidden: boolean, dream: DreamId, name: string, forgot: boolean, things: number, q1: number, q2: number, proud: number }
+type Save = { v: 1, at: At, me: Me, hidden: boolean, dream: DreamId, name: string, forgot: boolean, things: number, q1: number, q2: number, proud: number, proudText?: string }
 const SAVE_KEY = 'when-i-grow-up:save'
 function saveAt(at: At) {
-  const s: Save = { v: 1, at, me, hidden, dream: result.dream, name: dreamName, forgot, things: result.things, q1: sent.q1, q2: sent.q2, proud: sent.proud }
-  try { sessionStorage.setItem(SAVE_KEY, JSON.stringify(s)) } catch {}
+  const s: Save = { v: 1, at, me, hidden, dream: result.dream, name: dreamName, forgot, things: result.things, q1: sent.q1, q2: sent.q2, proud: sent.proud, proudText: sent.proud === -1 ? result.proud : undefined }
+  try {
+    sessionStorage.setItem(SAVE_KEY, JSON.stringify(s))
+    savedNote.value = true // 저장이 실제로 됐을 때만 알린다
+    clearTimeout(savedTimer)
+    savedTimer = setTimeout(() => { savedNote.value = false }, 2500)
+  } catch {}
 }
+const savedNote = ref(false) // 왼쪽 위 "진행 상황 저장됨" 알림
+let savedTimer: ReturnType<typeof setTimeout> | undefined
 function clearSave() {
   try { sessionStorage.removeItem(SAVE_KEY) } catch {}
 }
@@ -79,7 +86,7 @@ function load(): Save | null {
   const ok = !!s && s.v === 1 && at >= 0 && s.me === me && typeof s.hidden === 'boolean'
     && (at < 1 || (ids.includes(s.dream!) && typeof s.name === 'string' && !!s.name && typeof s.forgot === 'boolean'
       && inRange(s.things, things.length + 1) && inRange(s.q1, s3.q1.answers.length)))
-    && (at < 2 || (inRange(s.q2, s3.q2.answers.length) && inRange(s.proud, s3.q3.answers.length)))
+    && (at < 2 || (inRange(s.q2, s3.q2.answers.length) && ((s.proud === -1 && typeof s.proudText === 'string' && !!s.proudText) || inRange(s.proud, s3.q3.answers.length))))
   if (ok) return s as Save
   clearSave()
   return null
@@ -108,7 +115,7 @@ function restore(s: Save) {
   Object.assign(room, { view: 'room', starsGlow: 0.3, brightness: 1 })
   if (s.at === 'drawer') ui.lines = s3.q1.homework.map(text => ({ text }))
   else {
-    result.proud = s3.q3.answers[s.proud]!
+    result.proud = s.proudText?.slice(0, s3.q3.custom.max) || s3.q3.answers[s.proud]!
     ui.lines = s3.window.ask.map(text => ({ text }))
   }
 }
@@ -349,21 +356,26 @@ async function dream() {
   Object.assign(ui, { eyes: 1, eyeMove: '0ms' })
   await say(scene1.hello)
   await think(scene1.who)
-  await say(...scene1.intro)
-  const h = await ask(scene1.howAreYou.map(a => a.text))
-  said(scene1.howAreYou[h]!.text)
-  await say(scene1.howAreYou[h]!.reply)
+  await say(scene1.heard, ...scene1.intro)
+  const how = scene1.howAreYou
+  const h = await ask([...how.map(a => a.text), scene1.howCustom.label])
+  // 직접 쓰기: 비워 내면 '(대답이 안 나온다)'로 친다
+  const own = h === how.length ? await input({ ...scene1.howCustom, label: '요즘 나는' }) : ''
+  const a = own ? { text: own, reply: scene1.howCustom.reply } : how[h] ?? how.at(-1)!
+  said(a.text)
+  await say(a.reply)
   await sleep(800)
   ui.lines = []
   await say(scene1.askDream)
   await think(scene1.forgot)
   const typed = await input({ ...scene1.input, chips: ids.map(id => dreams[id].label), label: '열 살 때 꿈' })
-  const d = matchDream(typed)
-  forgot = !typed || /모르|기억|없/.test(typed)
-  // 문장으로 적어도 직업 이름만 남긴다: "제빵사가 되고 싶었어" → "제빵사"
-  const name = dreamName = forgot ? dreams.unknown.name : typed.replace(/\s*(이|가)?\s*(되고\s*싶|될래|될\s*거|였|이었|요$).*$/, '') || typed
+  const { id: d, name: found } = matchDream(typed)
+  const blank = !typed || /모르|기억|없/.test(typed)
+  // 목록에 없는 꿈은 다시 보여 주지 않고, 일기도 기억 안 날 때처럼 흐릿하게 둔다
+  forgot = blank || !found
+  const name = dreamName = forgot ? dreams.unknown.name : found
   result.dream = d
-  await say(forgot ? scene1.confirmForgot : scene1.confirm(name), scene1.reply)
+  await say(blank ? scene1.confirmForgot : forgot ? scene1.confirmOther : scene1.confirm(name))
   await sleep(1000)
 
   // 꿈속 방이 서서히 보인다
@@ -402,6 +414,10 @@ async function dream() {
   sent.q1 = await ask(s3.q1.answers.map(a => a.text))
   said(s3.q1.answers[sent.q1]!.text)
   await say(s3.q1.answers[sent.q1]!.reply)
+  const more = s3.q1.answers[sent.q1]!.more
+  const m = await ask(more.map(a => a.text))
+  said(more[m]!.text)
+  await say(more[m]!.reply)
   await sleep(800)
   ui.lines = []
   await say(...s3.q1.homework)
@@ -419,7 +435,7 @@ async function diaryScene() {
 
   // 3-2. 일기 1쪽: 열 살 때 쓴 꿈
   ui.mode = 'diary'
-  // 기억 안 나면 직업 글자만 흐릿하게, 목록에 없는 꿈이면 그림 대신 크레용 글씨
+  // 기억 안 나거나 목록에 없는 꿈이면 직업 글자만 흐릿하게, kidDreams 꿈이면 그림 대신 크레용 글씨
   const page1 = s3.dreamPage.text(name, dreams[d].mind)
   const at = page1.indexOf(name)
   const own = d === 'unknown' && !forgot
@@ -451,18 +467,11 @@ async function diaryScene() {
   await say(s3.shamePage.react, m.ask)
   const mi = await ask([...m.answers, m.custom.label])
   if (mi < m.answers.length) said(m.answers[mi]!)
-  // 직접 쓰기: 치는 대로 일기 칸에 바로 써진다
+  // 직접 쓰기: 다 쓰고 내면 일기에 써진다
   const typing3 = mi === m.answers.length
-  const stop = typing3 ? watch(() => ui.typed, (t) => { diary.text = t ? s3.shamePage.text(t) : '' }) : undefined
   const shame = typing3 ? await input({ ...m.custom, label: '부끄러웠던 일' }) : s3.shamePage.diary[mi]!
-  stop?.()
   ui.lines = []
-  diary.text = ''
-  if (typing3 && shame) {
-    diary.text = s3.shamePage.text(shame)
-    await sleep(600)
-  }
-  else await scribble(s3.shamePage.text(shame || s3.shamePage.diary[0]!))
+  await scribble(s3.shamePage.text(shame || s3.shamePage.diary[0]!))
   for (const chunk of m.outro) {
     ui.lines = []
     await say(...chunk)
@@ -473,8 +482,12 @@ async function diaryScene() {
   ui.lines = []
   await turnPage(s3.todayPage.paper(new Date()))
   await say(s3.todayPage.react, s3.q3.question)
-  sent.proud = await ask(s3.q3.answers)
-  result.proud = s3.q3.answers[sent.proud]!
+  const pi = await ask([...s3.q3.answers, s3.q3.custom.label])
+  // 직접 쓰기: 다 쓰고 내면 일기와 결과 카드에 쓴다. 서버엔 안 보낸다 (sent.proud = -1)
+  const typing4 = pi === s3.q3.answers.length
+  const own4 = typing4 ? await input({ ...s3.q3.custom, label: '요즘 잘한 일' }) : ''
+  sent.proud = own4 ? -1 : typing4 ? s3.q3.answers.length - 1 : pi // 비워 내면 '그냥 버텼다'
+  result.proud = own4 || s3.q3.answers[sent.proud]!
   ui.lines = []
   await scribble(s3.todayPage.text(result.proud))
   await say(...s3.q3.reply)
@@ -643,6 +656,10 @@ const save = () => saveCard(result.dream, result.things, result.proud)
 
     <Transition name="fade">
       <img v-if="ui.thing" class="thing" :src="ui.thing" alt="" aria-hidden="true">
+    </Transition>
+
+    <Transition name="fade">
+      <p v-if="savedNote" class="saved" role="status">✓ 진행 상황이 저장됐어요</p>
     </Transition>
 
     <div class="dark" :class="{ on: ui.dark }" />

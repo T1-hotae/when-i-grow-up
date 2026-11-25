@@ -1,6 +1,6 @@
 import { dreams, scene2, scene3, scene4, type DreamId } from '../../app/data/script'
 
-// 답장 한 통 = 고른 답의 번호들. 직접 쓴 꿈과 "나만 봐요" 한 줄은 받지 않는다
+// 답장 한 통 = 고른 답의 번호들. 직접 쓴 꿈·잘한 일과 "나만 봐요" 한 줄은 받지 않는다
 type Body = { dream: DreamId, q1: number, q2: number, proud: number, reply: number, things: number }
 
 const pick = <T>(list: readonly T[], i: unknown) => (Number.isInteger(i) ? list[i as number] : undefined)
@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
     dream: b?.dream && Object.hasOwn(dreams, b.dream) ? b.dream : undefined,
     q1: pick(scene3.q1.answers, b?.q1)?.text,
     q2: pick(scene3.q2.answers, b?.q2)?.text,
-    proud: pick(scene3.q3.answers, b?.proud),
+    proud: b?.proud === -1 ? null : pick(scene3.q3.answers, b?.proud), // -1: 직접 써서 안 보낸 답
     reply: pick(scene4.replies, b?.reply),
     things: Number.isInteger(b?.things) && b!.things! >= 0 && b!.things! <= scene2.things.length ? b!.things : undefined,
   }
