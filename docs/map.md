@@ -19,7 +19,7 @@
 | 0-3 천장 | 야광별 보다 잠듦 (눈꺼풀 감기) | `scene0.ceiling` | [Room.vue](../app/components/Room.vue) (`view: 'ceiling'`) |
 | 1 꿈속 검은 화면 | 열 살의 나와 대화("어떻게 지내?"는 고르거나 직접 쓰기), 어릴 적 꿈 적기 | `scene1`, `dreams` | play.vue 템플릿 (대사·입력창). 아이 말은 화면 가운데 `.kid`, 내 말(속마음·고른 대답)과 선택지는 아래 `.bottom` (장면 1~4 공통) |
 | 2 어른 방 구경 | 아이가 내 방 물건을 하나씩 묻고 내가 대답을 고름 | `scene2` | play.vue 템플릿 (선택지, 물건 그림 `.thing`·`.object-option`) |
-| 3 그림일기 숙제 | 일기를 넘기며 꿈 속 "마음" 발견, 도장, 창밖 불빛. 일기는 가운데, 대사는 아래. 기억 안 나거나 목록에 없는 꿈은 직업 글자 흐림(`blur`), `kidDreams` 꿈은 그림 대신 크레용 글씨(`label`) | `scene3` | [Diary.vue](../app/components/Diary.vue), [CityWindow.vue](../app/components/CityWindow.vue) |
+| 3 그림일기 숙제 | 일기를 넘기며 꿈 속 "마음" 발견, "꿈 이뤘어?"에 "다른 길로 왔어"면 어떤 길인지 묻기(분야·직접 쓰기·비밀, `scene3.q2.path`), 도장, 창밖 불빛. 일기는 가운데, 대사는 아래. 기억 안 나거나 목록에 없는 꿈은 직업 글자 흐림(`blur`), `kidDreams` 꿈은 그림 대신 크레용 글씨(`label`) | `scene3` | [Diary.vue](../app/components/Diary.vue), [CityWindow.vue](../app/components/CityWindow.vue) |
 | 4 별 편지 | 열 살의 나에게 한 줄 편지 고르기 → 별로 접어 하늘로 | `scene4` | play.vue 템플릿 |
 | 깨어남 | 아침, 부모 채팅에 답장 (숨은 길이면 밤새 온 답장) | `wake`, `family` | Room.vue, Messenger.vue |
 | 5 결과 카드 | ○○형 어른 카드, 공유·저장, 작은 후원 링크(`scene5.coffee.url`이 비면 숨김) | `scene5`, `dreams[id].type` | [ResultCard.vue](../app/components/ResultCard.vue), [ending.css](../app/assets/css/ending.css) (새벽 도시 배경) |
@@ -48,8 +48,8 @@
 - [app/pages/result/[id].vue](../app/pages/result/[id].vue): 공유 링크로 들어오는 결과 유형 페이지 (`/result/doctor` 등).
 - [app/utils/matchDream.ts](../app/utils/matchDream.ts): 직접 쓴 꿈 글자를 결과 유형 id와 다시 보여 줄 말(`dreams` 이름 또는 `kidDreams`)로 바꿈. 쓴 글 자체는 화면에 다시 안 나옴. 못 알아들으면 `unknown`, 말은 `''`.
 - [app/utils/saveCard.ts](../app/utils/saveCard.ts): 결과 카드를 png로 저장.
-- [server/api/letters.post.ts](../server/api/letters.post.ts): 고른 답의 번호만 받는 API. 직접 쓴 글은 받지 않음.
 - [nuxt.config.ts](../nuxt.config.ts): 페이지 제목·설명, 손글씨 글꼴.
+- [server/api/letters.post.ts](../server/api/letters.post.ts): 고른 답의 번호와 지금 가는 길(`path`)을 받는 API. 직접 쓴 글은 `path`만 받음(입력칸에 익명으로 모인다고 안내).
 - [public/favicon.svg](../public/favicon.svg): 별 편지 모티프의 브라우저 아이콘. `favicon.ico`와 `apple-touch-icon.png`도 같은 그림이며 `nuxt.config.ts`에서 연결합니다.
 
 ## 결과 유형 (꿈)

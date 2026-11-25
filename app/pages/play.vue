@@ -54,6 +54,7 @@ const ui = reactive({
 const result = reactive({ dream: 'unknown' as DreamId, things: 0, proud: '' })
 const sent = { q1: -1, q2: -1, proud: -1, reply: -1 } // 서버로 보낼 고른 답 번호
 let dreamName = '' // 일기에 쓸 꿈 이름 (직접 쓴 말일 수 있다)
+let path: string | null = null // 지금 가는 길 (분야 또는 직접 쓴 말, 비밀이면 null). 서버로 보낸다
 let forgot = false // 꿈이 기억 안 난다고 했나
 const toast = ref('')
 const s3 = scene3
@@ -62,10 +63,10 @@ const s3 = scene3
 // sessionStorage라서 탭을 닫으면 지워진다. 필요한 대답이 하나라도 없거나 이상하면 지우고 처음부터.
 const SAVES = ['sleep', 'drawer', 'window'] as const // 눈 감기, 서랍 열기, 창밖 보기
 type At = typeof SAVES[number]
-type Save = { v: 1, at: At, me: Me, hidden: boolean, dream: DreamId, name: string, forgot: boolean, things: number, q1: number, q2: number, proud: number, proudText?: string }
+type Save = { v: 2, at: At, me: Me, hidden: boolean, dream: DreamId, name: string, forgot: boolean, things: number, q1: number, q2: number, path: string | null, proud: number, proudText?: string }
 const SAVE_KEY = 'when-i-grow-up:save'
 function saveAt(at: At) {
-  const s: Save = { v: 1, at, me, hidden, dream: result.dream, name: dreamName, forgot, things: result.things, q1: sent.q1, q2: sent.q2, proud: sent.proud, proudText: sent.proud === -1 ? result.proud : undefined }
+  const s: Save = { v: 2, at, me, hidden, dream: result.dream, name: dreamName, forgot, things: result.things, q1: sent.q1, q2: sent.q2, path, proud: sent.proud, proudText: sent.proud === -1 ? result.proud : undefined }
   try {
     sessionStorage.setItem(SAVE_KEY, JSON.stringify(s))
     savedNote.value = true // 저장이 실제로 됐을 때만 알린다
@@ -83,10 +84,12 @@ function load(): Save | null {
   let s: Partial<Save> | null = null
   try { s = JSON.parse(sessionStorage.getItem(SAVE_KEY) ?? 'null') } catch {}
   const at = SAVES.indexOf(s?.at as At)
-  const ok = !!s && s.v === 1 && at >= 0 && s.me === me && typeof s.hidden === 'boolean'
+  const ok = !!s && s.v === 2 && at >= 0 && s.me === me && typeof s.hidden === 'boolean'
     && (at < 1 || (ids.includes(s.dream!) && typeof s.name === 'string' && !!s.name && typeof s.forgot === 'boolean'
       && inRange(s.things, things.length + 1) && inRange(s.q1, s3.q1.answers.length)))
-    && (at < 2 || (inRange(s.q2, s3.q2.answers.length) && ((s.proud === -1 && typeof s.proudText === 'string' && !!s.proudText) || inRange(s.proud, s3.q3.answers.length))))
+    && (at < 2 || (inRange(s.q2, s3.q2.answers.length)
+      && (s.path === null || (typeof s.path === 'string' && !!s.path && s.path.length <= s3.q2.path.custom.max))
+      && ((s.proud === -1 && typeof s.proudText === 'string' && !!s.proudText) || inRange(s.proud, s3.q3.answers.length))))
   if (ok) return s as Save
   clearSave()
   return null
@@ -115,6 +118,7 @@ function restore(s: Save) {
   Object.assign(room, { view: 'room', starsGlow: 0.3, brightness: 1 })
   if (s.at === 'drawer') ui.lines = s3.q1.homework.map(text => ({ text }))
   else {
+    path = s.path
     result.proud = s.proudText?.slice(0, s3.q3.custom.max) || s3.q3.answers[s.proud]!
     ui.lines = s3.window.ask.map(text => ({ text }))
   }
@@ -456,6 +460,14 @@ async function diaryScene() {
   sent.q2 = await ask(s3.q2.answers.map(a => a.text))
   said(s3.q2.answers[sent.q2]!.text)
   await say(s3.q2.answers[sent.q2]!.reply)
+  if (sent.q2 === 1) { // 다른 길로 왔어: 어떤 길인지 묻는다. 빈칸으로 내면 비밀
+    const p = s3.q2.path
+    const i = await ask([...p.fields, p.custom.label, p.secret])
+    const typed = i === p.fields.length ? await input({ ...p.custom, label: '가고 있는 길' }) : ''
+    path = i < p.fields.length ? p.fields[i]! : typed || null
+    said(path ?? p.secret)
+    await say(path ? p.told(path) : p.secretReply)
+  }
   await sleep(600)
   await say(s3.still)
   await sleep(1500)
@@ -542,7 +554,7 @@ async function outro() {
   await say(...scene4.fold)
   await ask([scene4.action])
   // ui.free(한 줄 더 쓴 글)는 보내지 않는다. 전송이 실패해도 이야기는 계속된다
-  $fetch('/api/letters', { method: 'POST', body: { dream: result.dream, things: result.things, ...sent } }).catch(() => {})
+  $fetch('/api/letters', { method: 'POST', body: { dream: result.dream, things: result.things, path, ...sent } }).catch(() => {})
   Object.assign(ui, { writing: false, free: '', mine: '', lines: [], mode: 'sky' })
   room.view = 'sky'
   await sleep(3500)
