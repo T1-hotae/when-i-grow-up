@@ -480,3 +480,19 @@ export const scene5 = {
   // 카카오페이 송금 링크. 비우면 버튼이 안 보인다
   coffee: { label: '만든 사람에게 커피 한 잔 ☕', url: 'https://qr.kakaopay.com/FQkHrK05T' },
 }
+
+// 오른쪽 위 메뉴와 개발자 정보 창 (app.vue). 후원 링크는 scene5.coffee.url을 같이 쓴다
+export const about = {
+  home: '처음으로',
+  open: '개발자 정보',
+  coffee: '커피 한 잔 후원하기',
+  title: '개발자의 말',
+  words: [
+    'AI가 판치는 세상에서 취업을 준비하며',
+    '그래도 살아남으려 애쓰는 청년들에게',
+    '이 이야기를 바칩니다.',
+  ],
+  name: '황호태',
+  github: 'https://github.com/T1-hotae/when-i-grow-up',
+  close: '닫기',
+}
