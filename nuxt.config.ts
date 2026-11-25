@@ -1,6 +1,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2026-11-22',
   modules: ['@tresjs/nuxt'],
+  css: ['~/assets/css/ending.css'],
   app: {
     head: {
       htmlAttrs: { lang: 'ko' },

@@ -703,7 +703,7 @@ const save = () => saveCard(result.dream, result.things, result.proud)
       {{ ui.choices.length === 1 ? ui.choices[0] : ui.nextLabel || '다음' }} <span class="arrow" aria-hidden="true">→</span>
     </button>
 
-    <section v-if="ui.mode === 'result'" class="result">
+    <section v-if="ui.mode === 'result'" class="result ending-backdrop">
       <ResultCard :id="result.dream" :things="result.things" :proud="result.proud" />
       <div class="actions">
         <button class="primary" @click="share">{{ scene5.buttons.kakao }}</button>

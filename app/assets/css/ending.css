@@ -1,0 +1,18 @@
+/* 밤의 창밖 풍경이 새벽으로 바뀌는 결과 화면 배경. */
+.ending-backdrop {
+  background-color: #111a35;
+  background-image:
+    linear-gradient(180deg, rgb(7 13 32 / 0.22), rgb(9 14 35 / 0.1) 42%, rgb(8 13 31 / 0.68)),
+    url('/images/scenes/ending-dawn-desktop.webp');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 700px) {
+  .ending-backdrop {
+    background-image:
+      linear-gradient(180deg, rgb(7 13 32 / 0.18), rgb(9 14 35 / 0.08) 42%, rgb(8 13 31 / 0.72)),
+      url('/images/scenes/ending-dawn-mobile.webp');
+  }
+}

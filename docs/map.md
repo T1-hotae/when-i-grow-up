@@ -61,7 +61,7 @@
 
 | 폴더 | 무엇 |
 | --- | --- |
-| `scenes/` | 첫 화면 배경, 창밖 도시와 불 꺼진 버전 (`window-city-off.webp`) |
+| `scenes/` | 첫 화면 배경, 창밖 도시와 불 꺼진 버전 (`window-city-off.webp`), 엔딩 새벽 도시 가로·세로 배경 (`ending-dawn-desktop.webp`, `ending-dawn-mobile.webp`) |
 | `objects/` | 장면 2 물건 그림 6종 (`object-<이름>.webp`) |
 | `stories/` | 장면 0-2 친구 스토리 사진 |
 | `avatars/` | 스토리·단톡방 프로필 |

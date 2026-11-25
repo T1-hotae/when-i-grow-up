@@ -25,7 +25,7 @@ useSeoMeta({
 </script>
 
 <template>
-  <main class="result">
+  <main class="result ending-backdrop">
     <ResultCard :id="id" />
     <nav>
       <NuxtLink :to="`/result/${prev}`" aria-label="이전 유형">‹</NuxtLink>

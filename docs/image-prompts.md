@@ -1,6 +1,6 @@
 # 이미지 프롬프트
 
-모든 그림은 17장이에요 (남자용 스토리 3장은 따로). 각 그림의 프롬프트는 통째로 복사해서 쓰면 됩니다.
+프로젝트에 쓰는 그림의 프롬프트를 모았습니다. 각 그림의 프롬프트는 통째로 복사해서 쓰면 됩니다.
 
 - 저장 위치: 카드 `public/images/cards/`, 크레용 그림 `public/images/drawings/`, 스토리 `public/images/stories/`, 장면 `public/images/scenes/`, 이모티콘 `public/images/ui/`, 공유 미리보기 `public/images/social/`
 - 파일 이름 끝의 `astronaut`, `teacher` 같은 말은 `app/data/script.ts`의 꿈 id와 같아요. 코드에서는 `/images/cards/card-${id}.webp`처럼 불러옵니다.
@@ -136,6 +136,20 @@ Same composition and childlike crayon style as dream-unknown.webp, but the grown
 ```
 
 ## 3. 결과 카드 (12장)
+
+### 엔딩 배경 (2장)
+
+결과 카드 뒤의 엔딩 화면은 `scenes/ending-dawn-desktop.webp`(16:9)와 `scenes/ending-dawn-mobile.webp`(9:16)를 씁니다. 생성 원본은 `assets/image-sources/ending-dawn-*.png`, 적용 스타일은 `app/assets/css/ending.css`에 있습니다.
+
+`ending-dawn-desktop.webp`: `window-city.webp`를 편집 대상으로 넣습니다.
+```
+Keep the same Korean neighborhood buildings, rooftop silhouettes, window positions, distant tower, camera angle, horizon and painterly gouache brushwork. Transform the deep night into the first quiet moments of dawn: deep indigo at the top with a few last stars, desaturated lavender clouds, a restrained apricot glow along the low horizon, and a few warm amber apartment windows. Keep visual detail toward the edges because a vertical result card will cover the center. Gentle haze and subtle paper grain. No words, letters, signs, logos, people, card, UI or added foreground objects. Preserve the original 16:9 framing.
+```
+
+`ending-dawn-mobile.webp`: 생성한 가로 새벽 배경을 그림체 참고 이미지로 넣습니다.
+```
+Create a 9:16 portrait companion backdrop of the same Korean neighborhood at first light, matching the reference's soft gouache brushwork and muted colors. Deep indigo upper sky with a few fading stars, lavender clouds, a narrow apricot horizon, layered rooftops and apartment facades with a few amber windows near the bottom and far edges. Keep the center calm because a large result card will cover it; the top, bottom and narrow side margins must still feel complete. No text, letters, signs, logos, people, card, UI, moon or foreground props.
+```
 
 쓰는 곳: 장면 5 결과 카드와 공유 이미지. 유형 이름과 설명은 위쪽 빈 공간에, 버튼은 아래쪽 빈 공간에 HTML로 얹어요. 사람은 넣지 않아요.
 
