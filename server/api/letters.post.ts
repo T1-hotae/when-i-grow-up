@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     path: typeof b?.path === 'string' ? b.path.trim().slice(0, scene3.q2.path.custom.max) || null : null, // 비밀이면 null
     proud: b?.proud === -1 ? null : pick(scene3.q3.answers, b?.proud), // -1: 직접 써서 안 보낸 답
     reply: pick(scene4.replies, b?.reply),
-    things: Number.isInteger(b?.things) && b!.things! >= 0 && b!.things! <= scene2.things.length ? b!.things : undefined,
+    things: Number.isInteger(b?.things) && b!.things! >= 0 && b!.things! <= scene2.things.length + 1 ? b!.things : undefined, // +1: 화면엔 취미 물건(scene2.hobby)이 하나 더 있다
   }
   if (Object.values(letter).includes(undefined)) throw createError({ statusCode: 400, statusMessage: '잘못된 답장이에요' })
 
